@@ -13,33 +13,92 @@ public class nQueens {
 //		System.out.println(placeable(1,2,board));
 //		
 //		System.out.println(placeable(2,0,board));
-		System.out.println(placeable(3,4,board));
-		System.out.println(placeable(4,3,board));
+		
+//		System.out.println(placeable(0,0,board));
+//		System.out.println(placeable(0,1,board));
+//		System.out.println(placeable(0,2,board));
+//		System.out.println(placeable(0,3,board));
+//		System.out.println(placeable(0,4,board));
+//		
+//		System.out.println();
+//		
+//		System.out.println(placeable(1,0,board));
+//		System.out.println(placeable(1,1,board));
+//		System.out.println(placeable(1,2,board));
+//		System.out.println(placeable(1,3,board));
+//		System.out.println(placeable(1,4,board));
+//		
+//		System.out.println();
+//		
+//		System.out.println(placeable(2,0,board));
+//		System.out.println(placeable(2,1,board));
+//		System.out.println(placeable(2,2,board));
+//		System.out.println(placeable(2,3,board));
+//		System.out.println(placeable(2,4,board));
+//		
+//		System.out.println();
+//		
+//		System.out.println(placeable(3,0,board));
+//		System.out.println(placeable(3,1,board));
+//		System.out.println(placeable(3,2,board));
+//		System.out.println(placeable(3,3,board));
+//		System.out.println(placeable(3,4,board));
+//		
+//		System.out.println();
+//		
+//		System.out.println(placeable(4,0,board));
+//		System.out.println(placeable(4,1,board));
+//		System.out.println(placeable(4,2,board));
+//		System.out.println(placeable(4,3,board));
+//		System.out.println(placeable(4,4,board));
+//		
+//		System.out.println();
 		
 		printGrid(board);
+
 		recursion(0,0,board);
+
 	}
 	
 	public static int recursion(int pX, int pY, boolean[][] board) {
+		
+		//boolean[][] board = board1.clone();
+		
 		for (int x = pX; x <= board.length; x++) { //going horiz 0 -> board.length
+
 			//base case - print board if done
-			if(x == board.length) {
-				printGrid(board);
-				return 1;
-			}
+//			if(x == board.length) {
+//				System.out.println("answer below: ");
+//				printGrid(board);
+//				System.out.println();
+//				return 1;
+//			}
 			for (int y = pY; y < board.length; y++) { //going down vert 0 -> board.length
 				//if placeable, recurse, place, recurse again
-				if(placeable(y, x, board)) {
+				if(placeable(x, y, board)) {
+					
 					//make board clone
-					recursion(x, y+1, board); //recurse with board clone
+					boolean[][] clone = board.clone();					
+					recursion(x, y+1, clone); //recurse with board clone
+					
+					System.out.println("Placed at: " + y + "," + x);
+					board[y][x] = true;
+					printGrid(board);
+					System.out.println("cloned at " + y + "," + x);
+					System.out.println("Clone below: ");
+					printGrid(clone);
 					//add to board, continue
-				} else {System.out.println("HIII");}
+				} else if(!placeable(y, x, board)) { 
+					System.out.println("wasn't placeable at : " + x + "," + y);
+					System.out.println("Board below: ");
+					printGrid(board);
+					}
 			}
 		}
 		return 1;
 	}
 	
-	public static boolean placeable(int pX, int pY, boolean[][] board) { //Y,X input
+	public static boolean placeable(int pX, int pY, boolean[][] board) { //X,Y input
 		if (board[pX][pY]) { //check if spot occupied
 			return false;
 		}
